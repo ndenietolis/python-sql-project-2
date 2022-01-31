@@ -1,3 +1,4 @@
+from fcntl import LOCK_WRITE
 import time
 import pandas as pd
 import numpy as np
@@ -17,10 +18,17 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-
+    while True:
+        city = input("What city would you like to query?\nYour options are:\
+            \nChicago\nNew York City\nWashington\nPlease type your answer below\n").lower()
+        if city in CITY_DATA:
+            break
+        else:   
+            print("That's not an option or may have been misspelled.\nMake sure to type city names exactly as they appear!")
 
     # get user input for month (all, january, february, ... , june)
-
+    df = pd.read_csv(CITY_DATA[city])
+    print(df)
 
     # get user input for day of week (all, monday, tuesday, ... sunday)
 
