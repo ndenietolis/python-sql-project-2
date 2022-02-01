@@ -1,4 +1,3 @@
-from fcntl import LOCK_WRITE
 import time
 import pandas as pd
 import numpy as np
@@ -43,7 +42,7 @@ def get_filters():
         if day in days:
             break
         else:   
-            print("That's not an option or may have been misspelled.\nMake sure to type city names exactly as they appear!")
+            print("That's not an option or may have been misspelled.\n")
 
 
 
@@ -62,7 +61,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    df = pd.read_csv(city)
+    df = pd.read_csv(CITY_DATA[city])
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
@@ -82,6 +81,8 @@ def load_data(city, month, day):
 
     # filter by day of week if applicable
     if day != '':
+        days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', '']
+        day = days.index(day) + 1
         # filter by day of week to create the new dataframe
         
         df = df[df['day_of_week'] == day]
@@ -171,6 +172,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        print(df.head())
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
